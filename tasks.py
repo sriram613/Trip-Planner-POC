@@ -65,9 +65,18 @@ class TravelTasks:
             - Traveler Interests: {interests}
 
             **Note**: {self.__tip_section()}
-        """
-            ),
+        """),
             agent=agent,
+            expected_output=dedent(
+                f"""
+            **Expected Output**: A comprehensive 7-day travel itinerary document that includes:
+            - Daily plans with specific activities and locations
+            - Weather forecasts for each day
+            - Recommended places to eat
+            - Packing suggestions
+            - Budget breakdown for the entire trip
+            """
+            )
         )
 
     def identify_city(self, agent, origin, cities, interests, travel_dates):
@@ -82,7 +91,6 @@ class TravelTasks:
                         Your final answer must be a detailed report on the chosen city, 
                         including actual flight costs, weather forecast, and attractions.
 
-
                     **Parameters**: 
                     - Origin: {origin}
                     - Cities: {cities}
@@ -90,9 +98,18 @@ class TravelTasks:
                     - Travel Date: {travel_dates}
 
                     **Note**: {self.__tip_section()}
-        """
-            ),
+        """),
             agent=agent,
+            expected_output=dedent(
+                f"""
+            **Expected Output**: A detailed report that includes:
+            - The selected city for the trip
+            - Comparison of multiple cities based on weather, events, and costs
+            - Actual flight costs from the origin to the selected city
+            - Weather forecast for the selected city
+            - List of attractions and activities in the selected city
+            """
+            )
         )
 
     def gather_city_info(self, agent, city, travel_dates, interests):
@@ -111,7 +128,18 @@ class TravelTasks:
                     - Travel Date: {travel_dates}
 
                     **Note**: {self.__tip_section()}
-        """
-            ),
+        """),
             agent=agent,
+            expected_output=dedent(
+                f"""
+            **Expected Output**: An in-depth city guide document that includes:
+            - Key attractions and landmarks
+            - Local customs and cultural insights
+            - Special events happening during the travel dates
+            - Daily activity recommendations
+            - Hidden gems and lesser-known spots
+            - Weather forecasts for the travel dates
+            - High-level cost estimates for activities and attractions
+            """
+            )
         )

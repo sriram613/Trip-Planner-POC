@@ -1,12 +1,12 @@
 import os
 from crewai import Agent
+from crewai import LLM
 from textwrap import dedent
-from langchain import LangChain
-from langchain.llms import DeepSeek
 from langchain_openai import ChatOpenAI
+from LLMSelector2 import LLMHelper, LLM
+from Tools.search_tools import SearchTools
+from Tools.calculator_tools import CalculatorTools
 
-from tools.search_tools import SearchTools
-from tools.calculator_tools import CalculatorTools
 
 """
 Creating Agents Cheat Sheet:
@@ -35,25 +35,22 @@ Notes:
 - Backstory should be their resume
 """
 
+# groq_helper = LLMHelper(provider="groq")
+# llm = groq_helper.get_llm()
+# api_key =os.environ.get("GROQ_API_KEY")
+# llm=LLM(model="groq/deepseek-r1-distill-qwen-32b", api_key=api_key, temperature=0.7, verify=False)
+os.environ["GEMINI_API_KEY"] = os.getenv("GEMINI_API_KEY")
+
+llm = "gemini/gemini-2.0-flash"
 
 class TravelAgents:
-    def __init__(self):
-        # self.deepseek_model = DeepSeek(api_key=os.environ('DEEPSEEK_API_KEY'))
-        self.deepseek_model = DeepSeek(
-            api_key=os.environ('DEEPSEEK_API_KEY'),
-            model_name="deepseek-reasoner",
-            temperature=0.7
-)
-        self.OpenAIGPT35 = ChatOpenAI(
-            model_name="gpt-3.5-turbo", temperature=0.7)
-        self.OpenAIGPT4 = ChatOpenAI(model_name="gpt-4", temperature=0.7)
 
     def expert_travel_agent(self):
         return Agent(
             role="Expert Travel Agent",
             backstory=dedent(
                 f"""Expert in travel planning and logistics. 
-                I have decades of expereince making travel iteneraries."""),
+                I have decades of experience making travel itineraries."""),
             goal=dedent(f"""
                         Create a 7-day travel itinerary with detailed per-day plans,
                         include budget, packing suggestions, and safety tips.
@@ -63,7 +60,7 @@ class TravelAgents:
                 CalculatorTools.calculate
             ],
             verbose=True,
-            llm=self.deepseek_model,
+            llm=llm,
         )
 
     def city_selection_expert(self):
@@ -75,17 +72,17 @@ class TravelAgents:
                 f"""Select the best cities based on weather, season, prices, and traveler interests"""),
             tools=[SearchTools.search_internet],
             verbose=True,
-            llm=self.deepseek_model,
+            llm=llm,
         )
 
     def local_tour_guide(self):
         return Agent(
             role="Local Tour Guide",
             backstory=dedent(f"""Knowledgeable local guide with extensive information
-        about the city, it's attractions and customs"""),
+        about the city, its attractions, and customs"""),
             goal=dedent(
                 f"""Provide the BEST insights about the selected city"""),
             tools=[SearchTools.search_internet],
             verbose=True,
-            llm=self.deepseek_model,
+            llm=llm,
         )
