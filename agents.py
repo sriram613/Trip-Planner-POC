@@ -41,7 +41,7 @@ Notes:
 # llm=LLM(model="groq/deepseek-r1-distill-qwen-32b", api_key=api_key, temperature=0.7, verify=False)
 os.environ["GEMINI_API_KEY"] = os.getenv("GEMINI_API_KEY")
 
-llm = "gemini/gemini-2.0-flash"
+llm = "gemini/gemini-2.0-flash-exp"
 
 class TravelAgents:
 
